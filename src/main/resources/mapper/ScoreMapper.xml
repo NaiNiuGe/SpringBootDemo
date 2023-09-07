@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.test.Infrastructure.mapper.ScoreMapper">
+
+    <resultMap id="BaseResultMap" type="com.example.test.Domain.Entity.Score">
+            <id property="sno" column="sNo" jdbcType="CHAR"/>
+            <id property="cno" column="cNo" jdbcType="CHAR"/>
+            <result property="score" column="score" jdbcType="SMALLINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        sNo,cNo,score
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from score
+        where  sNo = #{sno,jdbcType=CHAR} AND cNo = #{cno,jdbcType=CHAR} 
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="String">
+        delete from score
+        where  sNo = #{sno,jdbcType=CHAR} AND cNo = #{cno,jdbcType=CHAR} 
+    </delete>
+
+    <insert id="insert">
+        insert into score
+             ( sNo,cNo,score )
+        values (#{sno,jdbcType=CHAR},#{cno,jdbcType=CHAR},#{score,jdbcType=SMALLINT} )
+    </insert>
+
+    <insert id="insertSelective">
+        insert into score
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="sno != null">sNo,</if>
+                <if test="cno != null">cNo,</if>
+                <if test="score != null">score,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="sno != null">#{sno,jdbcType=CHAR},</if>
+                <if test="cno != null">#{cno,jdbcType=CHAR},</if>
+                <if test="score != null">#{score,jdbcType=SMALLINT},</if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.example.test.Domain.Entity.Score">
+        update score
+        <set>
+                <if test="score != null">
+                    score = #{score,jdbcType=SMALLINT},
+                </if>
+        </set>
+        where   sNo = #{sno,jdbcType=CHAR} AND cNo = #{cno,jdbcType=CHAR} 
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.example.test.Domain.Entity.Score">
+        update score
+        set 
+            score =  #{score,jdbcType=SMALLINT}
+        where   sNo = #{sno,jdbcType=CHAR} AND cNo = #{cno,jdbcType=CHAR} 
+    </update>
+
+</mapper>

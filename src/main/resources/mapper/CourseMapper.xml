@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.test.Infrastructure.mapper.CourseMapper">
+
+    <resultMap id="BaseResultMap" type="com.example.test.Domain.Entity.Course">
+            <id property="cno" column="cNo" jdbcType="CHAR"/>
+            <result property="cname" column="cName" jdbcType="VARCHAR"/>
+            <result property="tno" column="tNo" jdbcType="CHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        cNo,cName,tNo
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from course
+        where  cNo = #{cno,jdbcType=CHAR} 
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="String">
+        delete from course
+        where  cNo = #{cno,jdbcType=CHAR} 
+    </delete>
+
+
+    <insert id="insert"  parameterType="com.example.test.Domain.Entity.Course" useGeneratedKeys="true">
+        insert into course
+        ( cName,tNo)
+        values (#{cname,jdbcType=VARCHAR},#{tno,jdbcType=CHAR}
+        )
+    </insert>
+
+
+    <insert id="insertSelective"  parameterType="com.example.test.Domain.Entity.Course" useGeneratedKeys="true">
+        insert into course
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="cname != null">cName,</if>
+                <if test="tno != null">tNo,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="cname != null">#{cname,jdbcType=VARCHAR},</if>
+                <if test="tno != null">#{tno,jdbcType=CHAR},</if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.example.test.Domain.Entity.Course">
+        update course
+        <set>
+                <if test="cname != null">
+                    cName = #{cname,jdbcType=VARCHAR},
+                </if>
+                <if test="tno != null">
+                    tNo = #{tno,jdbcType=CHAR},
+                </if>
+        </set>
+        where   cNo = #{cno,jdbcType=CHAR} 
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.example.test.Domain.Entity.Course">
+        update course
+        set 
+            cName =  #{cname,jdbcType=VARCHAR},
+            tNo =  #{tno,jdbcType=CHAR}
+        where   cNo = #{cno,jdbcType=CHAR} 
+    </update>
+</mapper>

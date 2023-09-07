@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: demo
+  mvc:
+    servlet:
+      load-on-startup: 1
+  datasource:
+    druid:
+      username: ${SPRING_DATASOURCE_USERNAME:root}
+      password: ${SPRING_DATASOURCE_PASSWORD:111111}
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: ${SPRING_DATASOURCE_URL:jdbc:mysql:///school?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8&useSSL=true}
+server:
+  port: 8080
+com:
+  druid:
+    testuser:
+      name: lisa
+      age: 20
+      sex: female
+mybatis:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  mapper-locations: classpath*:mapper/*.xml
+
+
